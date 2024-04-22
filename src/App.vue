@@ -9,7 +9,9 @@
     <!-- Daftar kegiatan -->
     <ul>
       <li v-for="(activity, index) in filteredActivities" :key="index">
-        <span :class="{ completed: activity.completed }">{{ activity.name }}</span>
+        <span :class="{ completed: activity.completed }" @click="toggleCompletion(index)">{{
+          activity.name
+        }}</span>
         <button @click="toggleCompletion(index)">
           {{ activity.completed ? 'Batal Checklist' : 'Checklist' }}
         </button>
@@ -56,3 +58,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.completed {
+  text-decoration: line-through;
+}
+</style>
