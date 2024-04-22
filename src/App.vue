@@ -1,85 +1,58 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <div id="app">
+    <h1>Manajemen Kegiatan</h1>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <!-- Form untuk menambahkan kegiatan baru -->
+    <input type="text" v-model="newActivity" placeholder="Tambahkan kegiatan baru" />
+    <button @click="addActivity">Tambah</button>
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
+    <!-- Daftar kegiatan -->
+    <ul>
+      <li v-for="(activity, index) in filteredActivities" :key="index">
+        <span :class="{ completed: activity.completed }">{{ activity.name }}</span>
+        <button @click="toggleCompletion(index)">
+          {{ activity.completed ? 'Batal Checklist' : 'Checklist' }}
+        </button>
+        <button @click="cancelActivity(index)">Batalkan</button>
+      </li>
+    </ul>
 
-  <RouterView />
+    <!-- Checkbox untuk memfilter kegiatan yang belum selesai -->
+    <input type="checkbox" v-model="showIncomplete" /> Tampilkan Kegiatan Belum Selesai
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
+<script>
+export default {
+  data() {
+    return {
+      newActivity: '',
+      activities: [],
+      showIncomplete: false
+    }
+  },
+  computed: {
+    filteredActivities() {
+      if (this.showIncomplete) {
+        return this.activities.filter((activity) => !activity.completed)
+      } else {
+        return this.activities
+      }
+    }
+  },
+  methods: {
+    addActivity() {
+      if (this.newActivity.trim() !== '') {
+        this.activities.push({ name: this.newActivity, completed: false })
+        this.newActivity = ''
+      }
+    },
+    toggleCompletion(index) {
+      this.activities[index].completed = !this.activities[index].completed
+    },
+    cancelActivity(index) {
+      this.activities.splice(index, 1)
+    }
   }
 }
-</style>
+</script>
