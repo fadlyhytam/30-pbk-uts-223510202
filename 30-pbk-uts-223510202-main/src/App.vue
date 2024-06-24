@@ -6,7 +6,7 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          Todo and Post App
+          Todo and Post Apps
         </q-toolbar-title>
       </q-toolbar>
 
@@ -27,7 +27,7 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-          <div>Footer Content</div>
+          <div>Fadly Maulana Iksan</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
